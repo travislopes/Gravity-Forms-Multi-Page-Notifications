@@ -16,11 +16,11 @@
 		class GFMultiPageNotifications extends GFAddOn {
 			
 			protected $_version = '1.0';
-			protected $_min_gravityforms_version = '1.9.5.1';
+			protected $_min_gravityforms_version = '1.9.6';
 			protected $_slug = 'gravity-forms-multi-page-notifications';
 			protected $_path = 'gravity-forms-multi-page-notifications/multipagenotifications.php';
 			protected $_full_path = __FILE__;
-			protected $_url = 'http://travislop.es';
+			protected $_url = 'http://travislop.es/plugins/gravity-forms-multi-page-notifications/';
 			protected $_title = 'Gravity Forms Multi-Page Notifications';
 			protected $_short_title = 'Multi-Page Notifications';
 			
@@ -87,16 +87,13 @@
 			/* Send notifications if passed test. */
 			function maybe_send_notification( $form ) {
 				
-				// send notification if previous page needed notification to be sent
-				
 				/* If this form only has one page, exit. */
 				if ( $this->get_form_page_count( $form ) == 1 )
 					return $form;
 										
 				$pages_to_send_notification = rgar( $form, 'multipage_notifications' );
-				//$current_page = GFFormDisplay::get_currrent_page( $form['id'] );
-				//$previous_page = $current_page - 1;
-				$previous_page = 0;
+				$current_page = GFFormDisplay::get_current_page( $form['id'] );
+				$previous_page = $current_page - 1;
 				
 				if ( in_array( $previous_page, $pages_to_send_notification ) ) {
 					
@@ -115,13 +112,14 @@
 				/* If this form only has one page, exit. */
 				$form_page_count = $this->get_form_page_count( $form );
 				if ( $form_page_count == 1 )
-					return $is_disabled;				
-				
+					return $is_disabled;
+									
 				/* If this page is not setup for multi-page notifications, exit. */
 				$multipage_notifications = rgar( $form, 'multipage_notifications' );
-				if ( empty( $multipage_notifications ) );
+				if ( empty( $multipage_notifications ) )
 					return $is_disabled;
 					
+				
 				/* If the last page is setup for multi-page notifications, return $is_disabled. */
 				if ( in_array( $form_page_count, $multipage_notifications ) )
 					return $is_disabled;
