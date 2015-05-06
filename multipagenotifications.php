@@ -95,7 +95,7 @@
 				$current_page = GFFormDisplay::get_current_page( $form['id'] );
 				$previous_page = $current_page - 1;
 				
-				if ( in_array( $previous_page, $pages_to_send_notification ) ) {
+				if ( in_array( $previous_page, $pages_to_send_notification ) && $this->is_form_valid( $form ) ) {
 					
 					$entry = GFFormsModel::create_lead( $form );
 					GFAPI::send_notifications( $form, $entry );
@@ -143,6 +143,20 @@
 				$tooltip .= __( 'Check the pages you would like to have the form\'s notifications sent after. If any pages have notifications sent, notifications will not be sent after form completion.', 'gravityformsmultipagenotifications' );
 				
 				return '<a href="#" onclick="return false;" class="gf_tooltip tooltip tooltip_multipage_notifications" title="'. $tooltip .'"><i class="fa fa-question-circle"></i></a>';
+				
+			}
+			
+			/* Is form valid? */
+			function is_form_valid( $form ) {
+				
+				foreach ( $form['fields'] as $field ) {
+					
+					if ( $field->failed_validation == true )
+						return false;
+					
+				}
+				
+				return true;
 				
 			}
 			

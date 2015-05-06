@@ -9,7 +9,7 @@
 Multi-Page Notifications for Gravity Forms allows you to send out notifications after a user has finished filling out a page of a multi-page form. Notifications can be sent by setting which pages they should be sent after in the form settings. If any notifications are set to be sent after a page has been completed, notifications will not be sent after form submission unless the last page is also set to have notifications sent.
 
 ### Changelog
-* v1.0.0
+* v1.0
 	* Initial release
 
 ### Installation
